@@ -1,0 +1,32 @@
+# File môi trường thực tế — KHÔNG commit file này lên git
+.env
+
+# Thư mục môi trường ảo của uv/Python
+.venv/
+
+# Cache của Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Thư mục dữ liệu runtime — không cần track trong git
+data/outbox/*.csv
+data/success/*.csv
+data/failure/*.csv
+data/rejected/*.csv
+data/checkpoint/*.db
+
+# File log
+logs/*.log
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.egg-info/
+dist/
+build/

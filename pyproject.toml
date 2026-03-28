@@ -1,0 +1,15 @@
+[project]
+name = "telecom-cdr-auto-loader"
+version = "1.0.0"
+description = "ETL service tự động tải dữ liệu CDR viễn thông từ PostgreSQL vào MariaDB qua Auto Loader"
+requires-python = ">=3.11"
+dependencies = [
+    "psycopg2-binary>=2.9.9",   # kết nối PostgreSQL
+    "python-dotenv>=1.0.1",      # đọc file .env
+    "schedule>=1.2.2",           # lập lịch chạy ETL định kỳ
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.4.0",   # kiểm tra code style (tùy chọn)
+]

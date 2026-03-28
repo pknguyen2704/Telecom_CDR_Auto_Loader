@@ -1,0 +1,46 @@
+# ================================================================
+# docker-compose.yml — Cấu hình Docker Compose cho ETL Service
+#
+# QUAN TRỌNG VỀ DỮ LIỆU BỀN VỮNG (PERSISTENCE):
+#   Checkpoint, data, và logs được mount ra thư mục bên ngoài container
+#   thông qua bind mounts (ánh xạ thư mục host vào container).
+#
+#   → Khi container bị xóa và tạo lại, dữ liệu vẫn còn nguyên
+#   → Đây là yêu cầu bắt buộc: checkpoint phải sống sót qua restart
+# ================================================================
+
+version: "3.9"
+
+services:
+  etl:
+    # Build từ Dockerfile trong thư mục docker/
+    build:
+      context: ..           # context là thư mục gốc project (để COPY src/ hoạt động)
+      dockerfile: docker/Dockerfile
+
+    container_name: telecom_cdr_etl
+
+    # Đọc cấu hình từ file .env ở thư mục gốc project
+    env_file:
+      - ../.env
+
+    # Restart tự động nếu container crash
+    # "on-failure": chỉ restart khi exit code != 0 (không restart nếu Ctrl+C)
+    restart: on-failure
+
+    # ---------------------------------------------------------------
+    # BIND MOUNTS — ánh xạ thư mục host vào container
+    # Thay "../data" thành đường dẫn tuyệt đối nếu cần
+    # ---------------------------------------------------------------
+    volumes:
+      # Thư mục data: chứa outbox, success, failure, rejected, checkpoint
+      - ../data:/app/data
+      # Thư mục logs: file log ETL
+      - ../logs:/app/logs
+
+    # Logging của Docker: giới hạn dung lượng file log Docker (không phải log ETL)
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"   # Mỗi file log Docker tối đa 10MB
+        max-file: "3"     # Giữ tối đa 3 file log cũ
