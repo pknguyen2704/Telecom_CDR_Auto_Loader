@@ -1,23 +1,15 @@
-"""
-utils.py — Các hàm tiện ích dùng chung cho toàn project
-
-Hiện tại chứa:
-  - Hàm tạo các thư mục cần thiết khi khởi động
-  - Hàm in banner thông tin khi khởi động ứng dụng
-"""
-
 import os
-from src.config import config
-from src.log.logger import get_logger
+from src import config
+from src.logger import get_logger
 
 logger = get_logger(__name__)
 
 
 def pre_check_dir():
     dirs = [
-        config.OUTBOX_DIR,
-        config.SUCCESS_DIR,
-        config.FAILURE_DIR,
+        config.AUTO_LOADER_DIR,
+        os.path.join(config.AUTO_LOADER_DIR, "s"),
+        os.path.join(config.AUTO_LOADER_DIR, "f"),
         config.REJECTED_DIR,
         config.CHECKPOINT_DIR,
         config.LOG_DIR,

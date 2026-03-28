@@ -1,0 +1,28 @@
+CREATE TABLE IF NOT EXISTS telecom_cdr_nguyenphung (
+    id                BIGINT          NOT NULL,
+    caller            VARCHAR(50)     NOT NULL,
+    receiver          VARCHAR(50)     NOT NULL,
+    device_imei       VARCHAR(20)     NOT NULL,
+    event_time_unix   BIGINT          NOT NULL,
+    event_time_utc    DATETIME        NOT NULL,
+    duration_seconds  INT             NOT NULL DEFAULT 0,
+    duration_minutes  DECIMAL(10, 2)  NOT NULL DEFAULT 0.00,
+    call_type_code    VARCHAR(10)     NOT NULL,
+    call_type_name    VARCHAR(50)     NOT NULL,
+    tower_lat         DECIMAL(10, 6)  NOT NULL,
+    tower_lng         DECIMAL(10, 6)  NOT NULL,
+    country           VARCHAR(100)    NOT NULL,
+    created_at        DATETIME        NOT NULL,
+    fileid            int(11)         DEFAULT NULL,
+    caseid            int(11)         DEFAULT NULL,
+    departmentid      int(11)         DEFAULT NULL,
+    system_comment    varchar(1024)   DEFAULT null,
+    PRIMARY KEY (id),
+    INDEX idx_caller         (caller),
+    INDEX idx_receiver       (receiver),
+    INDEX idx_device_imei    (device_imei),
+    INDEX idx_country        (country),
+    INDEX idx_call_type_name (call_type_name),
+    INDEX idx_event_time_utc (event_time_utc)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

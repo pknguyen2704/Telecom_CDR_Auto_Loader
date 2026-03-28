@@ -1,0 +1,17 @@
+x-service-defaults: &service-defaults
+  restart: 'unless-stopped'
+  logging:
+    options:
+      max-size: '25m'
+      max-file: '10'
+
+services:
+  etl_service:
+    <<: *service-defaults
+    env_file:
+      - .env
+    image: 'nguyenphung_telecom_cdr_auto_loader:1.0'
+    container_name: nguyenphung_telecom_cdr_auto_loader
+    volumes:
+      - /opt/data/loader/auto_loader_nguyenphung:/app/auto_loader
+
