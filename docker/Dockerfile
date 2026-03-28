@@ -13,3 +13,4 @@ RUN mkdir -p auto_loader
 ENV PYTHONUNBUFFERED=1
 
 CMD ["python", "-m", "src.main"]
+
